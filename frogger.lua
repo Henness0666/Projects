@@ -80,6 +80,12 @@ function printCentered(str, ypos)
 	term.write(str)
 end
 
+function saveTable(table,name)
+	local file = fs.open(name,"w")
+	file.write(textutils.serialize(table))
+	file.close()
+end
+
 function returnColor(str)
 	return colors[str]
 end
@@ -103,7 +109,7 @@ function moveOjects()
 		for key,value in pairs(locations[3]) do
 			objects[3][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 3 then
+		if objects[posy][posx] == 0  and posy == 3 and not death then
 			posx = posx + 1
 		end
 	end
@@ -119,7 +125,7 @@ function moveOjects()
 		for key,value in pairs(locations[5]) do
 			objects[5][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 5 then
+		if objects[posy][posx] == 0  and posy == 5 and not death then
 			posx = posx + 1
 		end
 	end
@@ -135,7 +141,7 @@ function moveOjects()
 		for key,value in pairs(locations[4]) do
 			objects[4][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 4 then
+		if objects[posy][posx] == 0  and posy == 4 and not death then
 			posx = posx - 1
 		end
 	end
@@ -151,7 +157,7 @@ function moveOjects()
 		for key,value in pairs(locations[6]) do
 			objects[6][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 6 then
+		if objects[posy][posx] == 0  and posy == 6 and not death then
 			posx = posx - 1
 		end
 	end
@@ -214,6 +220,7 @@ function checkDeath()
 		elseif posy > 13 then
 			posy = posy - 1
 		end
+		saveTable(objects, "objectsondeath")
 		death = true
 	end
 end
