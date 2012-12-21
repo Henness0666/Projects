@@ -112,7 +112,7 @@ function moveOjects()
 			posx = posx + 1
 		end
 	end
-	if math.fmod(gametime, 2) == 0 then -- Logs 2
+	if math.fmod(gametime, 0.5) == 0 then -- Logs 2
 		local advance = 0
 		repeat
 			advance = advance + 1
@@ -133,7 +133,7 @@ function moveOjects()
 			posx = posx + 1
 		end
 	end
-	if math.fmod(gametime, 2) == 0 then -- Turtles 1
+	if math.fmod(gametime, 1.5) == 0 then -- Turtles 1
 		local advance = 0
 		repeat
 			advance = advance + 1
@@ -154,7 +154,7 @@ function moveOjects()
 			posx = posx - 1
 		end
 	end
-	if math.fmod(gametime, 2) == 0 then -- Turtles 2
+	if math.fmod(gametime, 3) == 0 then -- Turtles 2
 		for key,value in pairs(locations[6]) do
 			objects[6][value] = 0
 			if value > 1 then
@@ -170,7 +170,7 @@ function moveOjects()
 			posx = posx - 1
 		end
 	end
-	if math.fmod(gametime, 2) == 0 then -- Cars 1
+	if math.fmod(gametime, 1) == 0 then -- Cars 1
 		for key,value in pairs(locations[8]) do
 			objects[8][value] = 0
 			if value < #objects[8] then
@@ -182,7 +182,7 @@ function moveOjects()
 			end
 		end
 	end
-	if math.fmod(gametime, 2) == 0 then -- Cars 2
+	if math.fmod(gametime, 3) == 0 then -- Cars 2
 		for key,value in pairs(locations[10]) do
 			objects[10][value] = 0
 			if value < #objects[10] then
@@ -206,7 +206,7 @@ function moveOjects()
 			end
 		end
 	end
-	if math.fmod(gametime, 2) == 0 then -- Cars 4
+	if math.fmod(gametime, 3) == 0 then -- Cars 4
 		for key,value in pairs(locations[11]) do
 			objects[11][value] = 0
 			if value > 1 then
@@ -321,7 +321,7 @@ function runFrogger()
 	resetFrog()
 	runcount = 0
 	while true do
-		gametimer = os.startTimer(0.04)
+		gametimer = os.startTimer(0.05)
 		local event, id = os.pullEvent("timer")
 		if event == "timer" and id == gametimer then
 			runcount = runcount + 1
