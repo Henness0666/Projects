@@ -92,11 +92,6 @@ end
 
 function moveOjects()
 	if math.fmod(gametime, 2) == 0 then -- Logs 1
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 22
 		for key,value in pairs(locations[3]) do
 			objects[3][value] = 0
 			if value < #objects[3] then
@@ -113,11 +108,6 @@ function moveOjects()
 		end
 	end
 	if math.fmod(gametime, 0.5) == 0 then -- Logs 2
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 16
 		for key,value in pairs(locations[5]) do
 			objects[5][value] = 0
 			if value < #objects[5] then
@@ -134,11 +124,6 @@ function moveOjects()
 		end
 	end
 	if math.fmod(gametime, 1.5) == 0 then -- Turtles 1
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 16
 		for key,value in pairs(locations[4]) do
 			objects[4][value] = 0
 			if value > 1 then
@@ -216,26 +201,6 @@ function moveOjects()
 				objects[11][1] = #objects[11]
 				locations[11][key] = #objects[11]
 			end
-		end
-	end
-end
-
-function runMove()
-	while true do
-		local id, key = os.pullEvent("key")
-		-- DOWN = 208 UP = 200 LEFT = 203 RIGHT = 205 ENTER = 28
-		if key == 200 and not death then
-			posy = posy-1
-			face = 0
-		elseif key == 208 and not death then
-			posy = posy+1
-			face = 2
-		elseif key == 203 and not death then
-			posx = posx-1
-			face = 3
-		elseif key == 205 and not death then
-			posx = posx+1
-			face = 1
 		end
 	end
 end
@@ -320,19 +285,32 @@ end
 function runFrogger()
 	resetFrog()
 	runcount = 0
+	gametimer = os.startTimer(0.05)
 	while true do
-		gametimer = os.startTimer(0.05)
-		local event, id = os.pullEvent("timer")
-		if event == "timer" and id == gametimer then
+		local event, key = os.pullEvent()
+		if event == "timer" and key == gametimer then
 			runcount = runcount + 1
 			gametime = runcount * 0.05
 			moveOjects()
 			checkDeath()
 			drawFrogger()
+			gametimer = os.startTimer(0.05)
+		elseif event == "key" and key == 200 and not death then
+			posy = posy-1
+			face = 0
+		elseif event == "key" and key == 208 and not death then
+			posy = posy+1
+			face = 2
+		elseif event == "key" and key == 203 and not death then
+			posx = posx-1
+			face = 3
+		elseif event == "key" and key == 205 and not death then
+			posx = posx+1
+			face = 1
 		end
 	end
 end
 
 if term.isColor() then
-	parallel.waitForAny(runFrogger, runMove)
+	runFrogger()
 end
