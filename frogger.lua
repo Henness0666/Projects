@@ -98,6 +98,9 @@ end
 
 function moveOjects()
 	if math.fmod(gametime, 2) == 0 then -- Logs 1
+		if objects[posy][posx] == 0  and posy == 3 and not death then
+			posx = posx + 1
+		end
 		for key,value in pairs(locations[3]) do
 			objects[3][value] = 0
 			if value < #objects[3] then
@@ -109,11 +112,11 @@ function moveOjects()
 		for key,value in pairs(locations[3]) do
 			objects[3][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 3 and not death then
-			posx = posx + 1
-		end
 	end
 	if math.fmod(gametime, 0.5) == 0 then -- Logs 2
+		if objects[posy][posx] == 0  and posy == 5 and not death then
+			posx = posx + 1
+		end
 		for key,value in pairs(locations[5]) do
 			objects[5][value] = 0
 			if value < #objects[5] then
@@ -125,11 +128,11 @@ function moveOjects()
 		for key,value in pairs(locations[5]) do
 			objects[5][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 5 and not death then
-			posx = posx + 1
-		end
 	end
 	if math.fmod(gametime, 1.5) == 0 then -- Turtles 1
+		if objects[posy][posx] == 0  and posy == 4 and not death then
+			posx = posx - 1
+		end
 		for key,value in pairs(locations[4]) do
 			objects[4][value] = 0
 			if value > 1 then
@@ -141,11 +144,11 @@ function moveOjects()
 		for key,value in pairs(locations[4]) do
 			objects[4][value] = 1
 		end
-		if objects[posy][posx] == 0  and posy == 4 and not death then
-			posx = posx - 1
-		end
 	end
 	if math.fmod(gametime, 3) == 0 then -- Turtles 2
+		if objects[posy][posx] == 0  and posy == 6 and not death then
+			posx = posx - 1
+		end
 		for key,value in pairs(locations[6]) do
 			objects[6][value] = 0
 			if value > 1 then
@@ -156,9 +159,6 @@ function moveOjects()
 		end
 		for key,value in pairs(locations[6]) do
 			objects[6][value] = 1
-		end
-		if objects[posy][posx] == 0  and posy == 6 and not death then
-			posx = posx - 1
 		end
 	end
 	if math.fmod(gametime, 1) == 0 then -- Cars 1
@@ -220,7 +220,6 @@ function checkDeath()
 		elseif posy > 13 then
 			posy = posy - 1
 		end
-		saveTable(objects, "objectsondeath")
 		death = true
 	end
 end
