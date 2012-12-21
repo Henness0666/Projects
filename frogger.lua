@@ -334,5 +334,5 @@ function runFrogger()
 end
 
 if term.isColor() then
-	parallel.waitForAny(drawFrogger, runMove)
+	parallel.waitForAny(runFrogger, runMove)
 end
