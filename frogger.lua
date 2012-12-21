@@ -325,7 +325,7 @@ function runFrogger()
 		local event, id = os.pullEvent("timer")
 		if event == "timer" and id == gametimer then
 			runcount = runcount + 1
-			runtime = runcount * 0.04
+			gametime = runcount * 0.04
 			moveOjects()
 			checkDeath()
 			drawFrogger()
