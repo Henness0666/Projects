@@ -90,8 +90,8 @@ function resetFrog()
 	face = 0
 end
 
-function runLogsA()
-	while true do
+function moveOjects()
+	if math.fmod(gametime, 2) == 0 then -- Logs 1
 		local advance = 0
 		repeat
 			advance = advance + 1
@@ -112,10 +112,7 @@ function runLogsA()
 			posx = posx + 1
 		end
 	end
-end
-
-function runLogsB()
-	while true do
+	if math.fmod(gametime, 2) == 0 then -- Logs 2
 		local advance = 0
 		repeat
 			advance = advance + 1
@@ -136,10 +133,7 @@ function runLogsB()
 			posx = posx + 1
 		end
 	end
-end
-
-function runTurtlesA()
-	while true do
+	if math.fmod(gametime, 2) == 0 then -- Turtles 1
 		local advance = 0
 		repeat
 			advance = advance + 1
@@ -160,15 +154,7 @@ function runTurtlesA()
 			posx = posx - 1
 		end
 	end
-end
-
-function runTurtlesB()
-	while true do
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 16
+	if math.fmod(gametime, 2) == 0 then -- Turtles 2
 		for key,value in pairs(locations[6]) do
 			objects[6][value] = 0
 			if value > 1 then
@@ -184,15 +170,7 @@ function runTurtlesB()
 			posx = posx - 1
 		end
 	end
-end
-
-function runCarsA()
-	while true do
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 22
+	if math.fmod(gametime, 2) == 0 then -- Cars 1
 		for key,value in pairs(locations[8]) do
 			objects[8][value] = 0
 			if value < #objects[8] then
@@ -204,15 +182,7 @@ function runCarsA()
 			end
 		end
 	end
-end
-
-function runCarsB()
-	while true do
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 16
+	if math.fmod(gametime, 2) == 0 then -- Cars 2
 		for key,value in pairs(locations[10]) do
 			objects[10][value] = 0
 			if value < #objects[10] then
@@ -224,15 +194,7 @@ function runCarsB()
 			end
 		end
 	end
-end
-
-function runCarsC()
-	while true do
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 16
+	if math.fmod(gametime, 2) == 0 then -- Cars 3
 		for key,value in pairs(locations[9]) do
 			objects[9][value] = 0
 			if value > 1 then
@@ -244,15 +206,7 @@ function runCarsC()
 			end
 		end
 	end
-end
-
-function runCarsD()
-	while true do
-		local advance = 0
-		repeat
-			advance = advance + 1
-			sleep(0.01)
-		until advance == 16
+	if math.fmod(gametime, 2) == 0 then -- Cars 4
 		for key,value in pairs(locations[11]) do
 			objects[11][value] = 0
 			if value > 1 then
@@ -287,96 +241,98 @@ function runMove()
 end
 
 function checkDeath()
-	while true do
-		if death then
-			sleep(3)
-			death = false
-			break
+	if objects[posy][posx] == 1 or  posx < 1 or posx > 13 or posy > 13 then
+		if posx < 1 then
+			posx = posx + 1
+		elseif posx > 13 then
+			posx = posx - 1
+		elseif posy > 13 then
+			posy = posy - 1
 		end
-		sleep(0.01)
+		death = true
 	end
 end
 
 function drawFrogger()
-	resetFrog()
-	while true do
-		term.clear()
-		for i=1,terrainh do
-			for j=1,terrainw do
-				term.setCursorPos(j+woffset, i+hoffset)
-				term.setBackgroundColor(returnColor(terrain[i][j]))
-				write(" ")
-				term.setCursorPos(j+woffset, i+hoffset)
-				if i == 2 then
-					if objects[i][j] == 2 then
-						term.setTextColor(returnColor("4"))
-						write("*")
-					end
-				elseif i == 3 or i == 5 then
-					if objects[i][j]  == 0 then
-						term.setBackgroundColor(returnColor("c"))
-						write(" ")
-					end
-				elseif i == 4 or i == 6 then
-					if objects[i][j]  == 0 then
-						if turtlelevel == 3 then
-							term.setBackgroundColor(returnColor("e"))
-							term.setTextColor(returnColor("5"))
-							write("O")
-						elseif turtlelevel == 2 then
-							term.setTextColor(returnColor("5"))
-							write("O")
-						elseif turtlelevel == 1 then
-							term.setTextColor(returnColor("5"))
-							write("o")
-						end
-					end
-				elseif i == 8 or i == 10 then
-					if objects[i][j]  == 1 then
-						term.setTextColor(returnColor("e"))
-						write(">")
-					end
-				elseif i == 9 or i == 11 then
-					if objects[i][j]  == 1 then
-						term.setTextColor(returnColor("a"))
-						write("<")
+	term.clear()
+	for i=1,terrainh do
+		for j=1,terrainw do
+			term.setCursorPos(j+woffset, i+hoffset)
+			term.setBackgroundColor(returnColor(terrain[i][j]))
+			write(" ")
+			term.setCursorPos(j+woffset, i+hoffset)
+			if i == 2 then
+				if objects[i][j] == 2 then
+					term.setTextColor(returnColor("4"))
+					write("*")
+				end
+			elseif i == 3 or i == 5 then
+				if objects[i][j]  == 0 then
+					term.setBackgroundColor(returnColor("c"))
+					write(" ")
+				end
+			elseif i == 4 or i == 6 then
+				if objects[i][j]  == 0 then
+					if turtlelevel == 3 then
+						term.setBackgroundColor(returnColor("e"))
+						term.setTextColor(returnColor("5"))
+						write("O")
+					elseif turtlelevel == 2 then
+						term.setTextColor(returnColor("5"))
+						write("O")
+					elseif turtlelevel == 1 then
+						term.setTextColor(returnColor("5"))
+						write("o")
 					end
 				end
-				if posx == j and posy == i and not death then
-					term.setCursorPos(j+woffset, i+hoffset)
-					term.setTextColor(returnColor("5"))
-					if face == 0 then
-						write("^")
-					elseif face == 1 then
-						write(">")
-					elseif face == 2 then
-						write("v")
-					elseif face == 3 then
-						write("<")
-					end
-				elseif posx == j and posy == i and death then
-					term.setCursorPos(j+woffset, i+hoffset)
+			elseif i == 8 or i == 10 then
+				if objects[i][j]  == 1 then
 					term.setTextColor(returnColor("e"))
-					write("X")
+					write(">")
 				end
+			elseif i == 9 or i == 11 then
+				if objects[i][j]  == 1 then
+					term.setTextColor(returnColor("a"))
+					write("<")
+				end
+			end
+			if posx == j and posy == i and not death then
+				term.setCursorPos(j+woffset, i+hoffset)
+				term.setTextColor(returnColor("5"))
+				if face == 0 then
+					write("^")
+				elseif face == 1 then
+					write(">")
+				elseif face == 2 then
+					write("v")
+				elseif face == 3 then
+					write("<")
+				end
+			elseif posx == j and posy == i and death then
+				term.setCursorPos(j+woffset, i+hoffset)
+				term.setTextColor(returnColor("e"))
+				write("X")
 			end
 		end
-		sleep(0.01)
-		if objects[posy][posx] == 1 or  posx < 1 or posx > 13 or posy > 13 then
-			if posx < 1 then
-				posx = posx + 1
-			elseif posx > 13 then
-				posx = posx - 1
-			elseif posy > 13 then
-				posy = posy - 1
-			end
-			death = true
+	end
+end
+
+function runFrogger()
+	resetFrog()
+	runcount = 0
+	while true do
+		gametimer = os.startTimer(0.04)
+		local event, id = os.pullEvent("timer")
+		if event == "timer" and id == gametimer then
+			runcount = runcount + 1
+			runtime = runcount * 0.04
+			moveOjects()
+			checkDeath()
+			drawFrogger()
 		end
 	end
 end
 
 if term.isColor() then
-	while true do
-		parallel.waitForAny(drawFrogger, runMove, runCarsA, runCarsB, runCarsC, runCarsD, checkDeath, runLogsA, runLogsB, runTurtlesA, runTurtlesB)
-	end
+	parallel.waitForAny(drawFrogger, runMove)
 end
